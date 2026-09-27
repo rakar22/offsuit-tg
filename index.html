@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
+  <meta name="theme-color" content="#11100e"/>
+  <title>Offsuit TG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./style.css"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <section class="screen" id="lobby">
+    <div class="nav">
+      <div class="mark">
+        <div class="dot">ø</div>
+        <div><b>Offsuit TG</b><span id="helloName">Hold'em</span></div>
+      </div>
+      <div class="pill" id="bankroll">1.500 fichas</div>
+    </div>
+    <div class="hero">
+      <h1>Póker casual,<br><i>en Telegram.</i></h1>
+      <p>Practica contra la IA o abre una mesa privada y siéntate con amigos. Chips virtuales. Sin neón.</p>
+    </div>
+    <div class="grid">
+      <button class="btn main" id="playAi"><b>Practicar vs IA</b><small>4-max · ciegas 10/20 · empieza ahora</small></button>
+      <button class="btn gold" id="playHost"><b>Crear mesa privada</b><small>Código + enlace para jugadores reales</small></button>
+    </div>
+    <div class="field">
+      <label>Unirse con código</label>
+      <input id="joinCode" maxlength="8" placeholder="AB12C" autocomplete="off"/>
+    </div>
+    <div class="grid" style="margin-top:8px">
+      <button class="btn ghost" id="playJoin"><b>Entrar a la mesa</b><small>El anfitrión tiene que tenerla abierta</small></button>
+    </div>
+    <div class="meta">
+      <div class="stat"><em id="sHands">0</em><span>Manos</span></div>
+      <div class="stat"><em id="sWon">0</em><span>Ganadas</span></div>
+      <div class="stat"><em id="sVp">—</em><span>VPIP</span></div>
+    </div>
+    <p class="fine">Mini App lista para BotFather. Multijugador P2P: el anfitrión debe permanecer en la mesa. Las fichas no son dinero.</p>
+  </section>
+  <section class="table-screen hidden" id="table">
+    <div class="topbar">
+      <button class="pill" id="leave">Salir</button>
+      <div class="pill" id="tblName">Mesa</div>
+      <button class="pill" id="invite">Invitar</button>
+    </div>
+    <div class="felt">
+      <div id="toast" class="toast hidden"></div>
+      <div class="wait hidden" id="wait">
+        <div>
+          <h2 id="waitTitle">Mesa privada</h2>
+          <div class="code" id="waitCode">————</div>
+          <p id="waitHint">Comparte el código</p>
+          <div class="grid" id="hostBtns">
+            <button class="btn gold" id="startHumans" style="text-align:center"><b>Empezar con los que hay</b></button>
+            <button class="btn ghost" id="fillAi" style="text-align:center"><b>Rellenar vacíos con IA</b></button>
+            <button class="btn ghost" id="copyCode" style="text-align:center"><b>Copiar / compartir</b></button>
+          </div>
+        </div>
+      </div>
+      <div class="seat s1" id="seat1"></div>
+      <div class="seat s2" id="seat2"></div>
+      <div class="seat s3" id="seat3"></div>
+      <div class="center">
+        <div class="pot" id="potLabel">Bote 0</div>
+        <div class="board" id="board"></div>
+        <div class="street" id="street">—</div>
+      </div>
+      <div class="seat s0" id="seat0"></div>
+    </div>
+    <div class="hud">
+      <div>Mano <b id="handName">—</b></div>
+      <div>Pot odds <b id="odds">—</b></div>
+      <div>Por pagar <b id="toCall">0</b></div>
+    </div>
+    <div class="raise-row">
+      <input type="range" id="raiseAmt" min="40" max="400" step="10" value="60"/>
+      <span id="raiseVal">60</span>
+    </div>
+    <div class="controls">
+      <button class="act fold" id="btnFold">Fold</button>
+      <button class="act call" id="btnCall">Check</button>
+      <button class="act raise" id="btnRaise">Subir</button>
+    </div>
+  </section>
+</div>
+<script>window.OFFSUIT_BOT = '';</script>
+<script src="./engine.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
